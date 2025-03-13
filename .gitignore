@@ -1,0 +1,7 @@
+# Игнорировать папку myenv (виртуальное окружение Python)
+myenv/
+
+# Игнорировать служебные файлы macOS
+.DS_Store
+
+.workspace.code-workspace
