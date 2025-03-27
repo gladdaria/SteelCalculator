@@ -6,13 +6,12 @@ from tkinter import ttk, messagebox, filedialog
 import pandas as pd
 
 def resource_path(relative_path):
-        """Преобразует относительный путь в абсолютный для PyInstaller"""
-        try:
-            # PyInstaller создает временную папку в _MEIPASS
-            base_path = sys._MEIPASS
-        except AttributeError:
-            base_path = os.path.abspath(".")
-        return os.path.join(base_path, relative_path)
+    """ Возвращает правильный путь к файлу, работая как в .py, так и в .exe """
+    if getattr(sys, 'frozen', False):  # Если программа запущена как .exe
+        base_path = sys._MEIPASS  # PyInstaller создаёт временную папку
+    else:
+        base_path = os.path.abspath(".")  # Обычный режим (при запуске .py)
+    return os.path.join(base_path, relative_path)
 
 class SteelAlphaCalculator:
     def __init__(self, root):
@@ -54,9 +53,9 @@ class SteelAlphaCalculator:
         try:
             icons_dir = os.path.join(os.path.dirname(__file__), "icons")
             for name, filename in icon_mapping.items():
-                path = os.path.join(icons_dir, filename)
+                path = resource_path(os.path.join("icons", filename))  # Добавляем "icons/"
                 if os.path.exists(path):
-                    icons[name] = tk.PhotoImage(file=resource_path(filename))
+                    icons[name] = tk.PhotoImage(file=path)
         except Exception as e:
             messagebox.showwarning("Ошибка иконок", f"Не удалось загрузить иконки: {str(e)}")
         
@@ -66,7 +65,8 @@ class SteelAlphaCalculator:
         """Загрузка данных из JSON-файла"""
         try:
             current_dir = os.path.dirname(os.path.abspath(__file__))
-            json_path = resource_path(os.path.join("data", "steel_data.json"))
+            #json_path = resource_path(os.path.join("data", "steel_data.json"))
+            json_path = resource_path("data/steel_data.json")
             
             with open(json_path, "r", encoding="utf-8") as file:
                 data = json.load(file)
