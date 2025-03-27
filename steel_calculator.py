@@ -44,11 +44,11 @@ class SteelAlphaCalculator:
         }
         
         icon_mapping = {
-            'calculate': 'icons/calculator.ico',
-            'reset': 'icons/undo.ico',
-            'add': 'icons/add.ico',
-            'export': 'icons/excel.ico',
-            'clear': 'icons/clean.ico'
+            'calculate': 'icons/calculator.png',
+            'reset': 'icons/undo.png',
+            'add': 'icons/add.png',
+            'export': 'icons/excel.png',
+            'clear': 'icons/clean.png'
         }
         
         try:
